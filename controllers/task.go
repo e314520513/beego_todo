@@ -20,7 +20,7 @@ func (this *TaskController) ListTasks(){
 func (this *TaskController) NewTask(){
 	req  := struct{Title string}{}
 	if err:= json.Unmarshal(this.Ctx.Input.RequestBody,&req); err != nil {
-		this.Ctx.Output.SetStatus(4000)
+		this.Ctx.Output.SetStatus(400)
 		this.Ctx.Output.Body([]byte("empty title"))
 		return
 	}
