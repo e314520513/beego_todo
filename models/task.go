@@ -25,7 +25,7 @@ func (this *TaskManager) Save(task *Task) error{
 	}
 	for i,t :=range this.tasks{
 		if t.ID==task.ID{
-			m.tasks[i] = cloneTask(task)
+			this.tasks[i] = cloneTask(task)
 			return nil
 		}
 	}
