@@ -16,6 +16,13 @@ type TaskManager struct{
 	tasks []*Task
 	lastID int64
 }
+func NewTask(title string)(*Task,error){
+	if title == ""{
+		return nil, fmt.Errorf("empty title")
+	}
+	return &Task{0,title,false},nil
+
+}
 func (this *TaskManager) Save(task *Task) error{
 	if task.ID == 0 {
 		this.lastID++
