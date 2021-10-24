@@ -3,9 +3,8 @@ package controllers
 import(
 	"encoding/json"
 	"strconv"
-
 	"github.com/astaxie/beego"
-	"gihub.com/beego/samples/todo/models"
+	"beego_todo/models"
 )
 
 type TaskController struct{
