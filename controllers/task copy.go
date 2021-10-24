@@ -1,60 +1,38 @@
 package controllers
 
-import (
+import(
 	"encoding/json"
 	"strconv"
-
 	"github.com/astaxie/beego"
-	"github.com/beego/samples/todo/models"
+	"beego_todo/models"
 )
 
-type TaskController struct {
+type TaskController struct{
 	beego.Controller
 }
 
-// Example:
-//
-//   req: GET /task/
-//   res: 200 {"Tasks": [
-//          {"ID": 1, "Title": "Learn Go", "Done": false},
-//          {"ID": 2, "Title": "Buy bread", "Done": true}
-//        ]}
-func (this *TaskController) ListTasks() {
-	res := struct{ Tasks []*models.Task }{models.DefaultTaskList.All()}
+func (this *TaskController) ListTasks(){
+	res := struct{tasks []*models.Task}{models.DefaultTaskList.All()}
 	this.Data["json"] = res
 	this.ServeJSON()
 }
 
-// Examples:
-//
-//   req: POST /task/ {"Title": ""}
-//   res: 400 empty title
-//
-//   req: POST /task/ {"Title": "Buy bread"}
-//   res: 200
-func (this *TaskController) NewTask() {
-	req := struct{ Title string }{}
-	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &req); err != nil {
-		this.Ctx.Output.SetStatus(400)
+func (this *TaskController) NewTask(){
+	req  := struct{Title string}{}
+	if err:= json.Unmarshal(this.Ctx.Input.RequestBody,&req); err != nil {
+		this.Ctx.Output.SetStatus(4000)
 		this.Ctx.Output.Body([]byte("empty title"))
 		return
 	}
-	t, err := models.NewTask(req.Title)
+	t,err := models.NewTask(req.Title)
 	if err != nil {
 		this.Ctx.Output.SetStatus(400)
 		this.Ctx.Output.Body([]byte(err.Error()))
-		return
+		return 
 	}
 	models.DefaultTaskList.Save(t)
 }
 
-// Examples:
-//
-//   req: GET /task/1
-//   res: 200 {"ID": 1, "Title": "Buy bread", "Done": true}
-//
-//   req: GET /task/42
-//   res: 404 task not found
 func (this *TaskController) GetTask() {
 	id := this.Ctx.Input.Param(":id")
 	beego.Info("Task is ", id)
