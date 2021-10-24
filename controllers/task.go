@@ -12,10 +12,11 @@ type TaskController struct {
 }
 
 func (this *TaskController) ListTasks(){
-	res := struct{tasks []*models.Task}{models.DefaultTaskList.All()}
+	res := struct{Tasks []*models.Task}{models.DefaultTaskList.All()}
 	this.Data["json"] = res
 	this.ServeJSON()
 }
+
 
 func (this *TaskController) NewTask(){
 	req  := struct{Title string}{}
